@@ -16,25 +16,27 @@ K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigo
 >Qual a diferença entre VM e K8S?  
 >
 >ifjsdif
+>
 
 ## A anatomia de cluster K8S
 
-[inserir imagem]
-
->Desenhar a “anatomia” de uma infra K8S?  
->
->
+![](./images/Kubernetes-4.jpeg)
 
 >Quais são os principais objetos do K8S?  
 >
+> X
 >
 
 >O que é um Pod?  
 >
+> Pods são a menor estrutura possível, ou a menor estrutura publicavel do K8S. Ele é a abstração para um processo rodando no cluster, podemos entende-lo como um agrupador de containeres, embora a recomendação é que cada Pod tenha apenas um container.  
+>Um Pod é efemero, isto é, ele é considerado uma unidade totalmente descartavel do K8S. Todo o trabalho feito pelo pod ou no pod só se mantem nele até que seja removido, então tudo é perdido.
 >
 
 >O que é Service?  
 >
+> Assim como o Pod, Service é uma abstração, porem de rede. Definem um conjunto lógico de pods e uma politica pela qual saberemos como vamos acessa-los. 
+![](./images/Kubernetes-5.png)
 >
 
 >O que é Deployment?  
