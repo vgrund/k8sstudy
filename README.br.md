@@ -1,6 +1,6 @@
 # Um estudo de Kubernetes
 
-Este documento é uma compilação do estudo feito sobre o funcionamento do K8S e pode apresentar conceitos incompletos, inconsistentes, ou incorretos.
+Este documento é uma compilação do estudo feito sobre o funcionamento do K8S e pode apresentar conceitos incompletos, inconsistentes, ou incorretos. O propósito é de apenas responder algumas perguntas básicas sobre a anatomia do K8S.
 
 > ### O que é o Kubernetes?
 >
@@ -54,6 +54,10 @@ K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigo
 > ### O que é ReplicaSet?
 
 > ### O que é HPA?
+>
+> É um worload cuja a função é escalar horizontalmente Pods dentro de ReplicaSets, baseado em consumo de CPU e memória.  
+> O HPA funciona como um loop de controle com um tempo de sincronização default de 30 segundos. Isso significa que a cada 30 segundos o controlador vai buscar as métricas disponíveis no pod e tomar uma decisão baseado nos resultados dessas métricas e no valor que foi definido como limitante para que seja escalado.
+> ![](./images/Kubernetes-9.png)
 
 > ### O que é Namespace?
 
@@ -87,5 +91,13 @@ K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigo
 >   Podemos montar o ConfigMap como volume e configurar a aplicação para ler desse arquivo, assim conseguimos atualizar esses parametros sem ter que reiniciar a aplicação. Se essas configurações fossem lidas de variaveis de ambiente, o pod precisaria ser reiniciado pois essas variaveis são carregadas quando o pod é criado.
 
 > - **Volumes persistentes** - Trata-se de como o armazenamento será provisionado. Ele é um diretorio de armazenamento provisionado no cluster. É um serviço como qualquer outro (pod, service, etc). A diferença entre Volumes e Volumes Persistentes é que os PVs tem um lifecycle completamente independente do pod que o está utilizando. Com isso, podemos utilizar este tipo de serviço para criar um banco de dados ou armazenar um conteudo que deve ser realmente persistente, pois ele não será destruido ao fim da execução. Este tipo de volume é frequentemente associado a armzenamento em nuvem como Azure Blob Storage, AWS S3 e outros.
+
+> #### O que é um Cronjob?
+>
+> É uma maneira de executar um job de acordo com um agendamento.
+> K8S tem dois tipos de jobs. Run to Completion, que executa até que a tarefa seja completada, e o Cronjob que executa uma aplicação de acordo com um intervalo de tempo definido.  
+> Um job no K8S é um workload que cria um ou mais pods e garante que a aplicação seja executada. Uma vez que o trabalho neste pod é concluido, ele é finalizado, mas não é terminado, ou seja, o pod não executa mais nada, mas ainda é um pod ativo mas que entrou no estado Completed, o que indica que foi executdo e concluido com sucesso.  
+> Uma grande vantagem desse workload é que garantimos a execução com sucesso, uma vez que se o pod sofrer algum tipo de problema, o job criará mais um pod para substitui-lo.  
+> Em resumo, Cronjobs são essencialmente um job que pode ser agendado para executar em uma data ou intervalo especifico, usando a sintaxe crontab.
 
 > ### O que é Helm e pra que serve?
