@@ -60,6 +60,25 @@ K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigo
 > ![](./images/Kubernetes-9.png)
 
 > ### O que é Namespace?
+>
+> É um artificio que possibilita os workloads em nosso cluster. Seu uso é extramamente recomendado, pois eventualmente em ambiente produtivo teremos um sem-fim de workloads o que dificultará o gerenciamento. Quando usamos namespaces agrupamos workloads e estes ficam isolados de outros.  
+> Podemos definir namespaces para separar camadas de nossos projetos, como por exemplo, um namespace para o frontend e outro para o backend.
+>
+> Algumas caracteristicas importantes:
+>
+> - Nomes de recursos são unicos por Namespace, ou seja, não podemos ter dois Deployments com o mesmo nome no mesmo Namespace, mas podemos ter nomes de recursos iguais em Namespaces diferentes.
+> - Podemos utiliza-los para dividir recursos do cluster entre usuarios que o estão utilizando. É possivel definir limites de recursos para cada usuário em seu próprio Namespace (como se fosse um escopo de acesso).
+>
+> Namespaces padrões:  
+> Ao criar um cluster, 3 Namespaces são automaticamente criados.
+>
+> - default - É o Namespace padrão, onde os nossos workloads são criados quando não especificamos um.
+> - kube-system - Onde ficam os objetos do sistema do cluster. Deve permanecer inalterado, pois qualquer alteração pode interferir no funcionamento do cluster como um todo.
+> - kube-public - Um local que pode ser acessado por todos os usuários do cluster. Normalmente é utilizado para armazenar objetos do sistema do K8S que podem ser observados por qualquer pessoa, mas tambem é utilizado por muitas ferramentas para expor serviços que devem ser acessiveis publicamente.
+>
+> É uma boa prática criar Namespaces para separar ambientes (como Dev, QA e Prod).  
+> A organização que os Namespaces promovem tambem nos ajuda quando queremos por exemplo substituir uma aplicação por outra, pois podemos remover o Namespace todo, assim, todos os objetos tambem associados tambem são removidos.  
+> Namespaces tambem favorecem o acesso entre serviços, pois um serviço que está em um Namespace pode acessar outro serviço de outro Namespace através da rede interna (sem ir a internet). Para fazer isso, usamos: <nome-servico>.<nome-namespace>.svc.cluster.local.
 
 > ### O que é Ingress?
 >
