@@ -5,11 +5,11 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > ### O que é o Kubernetes?
 >
 > Kubernetes ou K8S, é um sistema open source para automação, gerencia, escalabilidade e deploy de aplicações baseadas em containeres.
-
-Nas minhas palavras:
-K8S é um sistema de gerenciamento, escalabilidade e deploy de sistemas distribuidos baseados em containeres.
-
-K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigos, Borg e Omega.
+>
+> K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigos, Borg e Omega.
+>
+> Nas minhas palavras:
+> K8S é um sistema de gerenciamento, escalabilidade e deploy de sistemas distribuidos baseados em containeres.
 
 > ### Qual a diferença entre VM e K8S?
 >
@@ -120,3 +120,33 @@ K8S foi criado por 3 engenheiros do Google e é sucessor de projetos mais antigo
 > Em resumo, Cronjobs são essencialmente um job que pode ser agendado para executar em uma data ou intervalo especifico, usando a sintaxe crontab.
 
 > ### O que é Helm e pra que serve?
+
+## Práticas
+
+### Controle de versão
+
+É uma excelente pratica sempre armazenar os arquivos manifesto em um sistema de versionamento como o Git. Isso evita que alterações sejam perdidas entre as mudanças de infraestrutura, uma vez que cada arquivo representa uma aplicação ou então um serviço de rede.
+A partir do controle de versão tambem podemos disparar atualizações na infraestrutura atraves da pipeline.
+
+### Agrupamento de objetos do mesmo tipo
+
+É possível agrupar workloads relativos ao mesmo serviço em um unico arquivo quando utilizamos yaml como manifesto.  
+Um exemplo é quando temos um Pod que possui um Service e um Ingress, é preferível que os tres workloads fiquem definidos no mesmo arquivo do que separados. Isso pode ser feito adicionando "---" entre as definições.
+![](./images/Kubernetes-10.png)
+
+### Outras dicas
+
+- Evitar usar o namespace default
+- Muitos comandos do Kubectl podem ser executados sobre diretórios inteiros, como por exemplo:  
+  `kubectl create -f`  
+  Passando um diretório cheio de arquivos manifestos.
+- Utilizar Annotations para colocar descrições e qualquer informação extra que o workload possa ter.
+- Evitar usa Pods "soltos", sempre utilizar Deployments ou ReplicaSets como agregador.
+- Criar os Services antes dos demais workloads que ele possa utilizar, isso porque todos os Pods que são criados recebem por padrão uma variável de ambiente que diz o host e a porta de todos os serviços que já estão em execução no cluster.
+- Tentar não especificar um hostport para um Pod, a não ser que seja absolutamente necessário. Quando criamos um hostport para um Pod, estamos criando um vinculo deste Pod com uma porta especifica, o que diminui a quantidade de locais possiveis para este Pod ser criado, uma vez que a combinação de IP, porta e protocolo deve ser unica em cada nó.
+- Definir labels que são identificadores semanticos da sua aplicação, por exemplo:
+
+        app: nome-do-app,
+        tipo: frontend,
+        env: stage,
+        versao: 3.0.0
