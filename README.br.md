@@ -126,7 +126,8 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 ### Controle de versão
 
 É uma excelente pratica sempre armazenar os arquivos manifesto em um sistema de versionamento como o Git. Isso evita que alterações sejam perdidas entre as mudanças de infraestrutura, uma vez que cada arquivo representa uma aplicação ou então um serviço de rede.
-A partir do controle de versão tambem podemos disparar atualizações na infraestrutura atraves da pipeline.
+A partir do controle de versão tambem podemos disparar atualizações na infraestrutura atraves de CD pipeline.
+![](./images/Kubernetes-11.png)
 
 ### Agrupamento de objetos do mesmo tipo
 
