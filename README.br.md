@@ -46,14 +46,36 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > ### O que é Deployment?
 >
 > Deployment é um objeto K8S que contem a definição de um Pod. K8S procura fazer com que o(s) Pod(s) estejam exatamente como definido no Deployment. Por exemplo, se definirmos que queremos 3 Pods rodando, então ao criar esse Deployment, 3 Pods serão criados e se em qualquer momento um desses Pods sofrer um crash e cair, um novo Pod com as mesmas caracteristicas será criado para manter o estado desejado de 3 Pods.
-> É uma boa prática nunca criar Pods diretamente, mas sempre sim Deployments que contem ReplicaSets e estes contem os Pods.
+> É uma boa prática nunca criar Pods diretamente, mas sim sempre Deployments que contem ReplicaSets e estes contem os Pods.
 > Os Deployments gerenciam as ReplicaSets e estas gerenciam os Pods.
 > Uma das vantagens dessa estrutura é que ganhamos um histórico de versões que foram executadas e isso nos permite que façamos rollback de versões em produção sem downtime.
 > ![](./images/Kubernetes-8.png)
+> Pods, ReplicaSets e Services são usados para construir uma unica instancia da nossa aplicação. Contudo, eles ajudam pouco a sustentar a rotina diaria de nova releases.
+>
+> O objeto Deployment existe para gerenciar a release de novas versões. Eles possibilitam facilmente mudar de uma versão de nosso código para outra. O processo de rollout é cuidadoso pois considera o tempo que definimos entre atualizar cada Pod. Ele tambem usa Healthchecks para garantir que a nova versão da aplicação está operando corretamente e interrompe o deployment se muitas falhas ocorrerem.
+>
+> Deployments são objetos declarativos que descrevem uma aplicação deployada. As duas operações mais comuns num Deployment são Scaling e Application Updates.
+> Deployments mantem historico dos rollouts. O que nos permite entender o estado anterior de deployment e fazer rollback para uma versão especifica.
+>
+> #### Deployment strategies
+>
+> Quando queremos atualizar a versão do nosso software, o Deployment oferece duas estratégias:
+>
+> - Recreate  
+>   Recreate é simples e rápido. O Deployment atualiza o ReplicaSet para usar a nova imagem e então derruba todos os Pods e depois os recria com a nova imagem. O problema é que essa estratégia causa downtime a aplicação, perdendo requests.
+> - Rolling Update  
+>   Rolling Update é mais lento que o Recreate mas mais seguro e robusto. A vantagem dessa estratégia é que ela não causa downtime, uma vez que apenas alguns Pods são atualizados, enquanto os demais continuam recebendo requisições. De forma incremental, os demais Pods vão sendo atualizados até que todos estejam com a nova versão.
 
 > ### O que é ReplicaSet?
+>
+> Pods são essencialmente singletons e existem diversos motivos que nos fazem querer ter replicas de um container, como: redundancia, escala, sharding (diferentes replicas podem lidar com diferentes partes de uma computação em paralelo).
+> Um ReplicaSet age como um gerenciador de Pods, garantindo que os tipos certos e a quantidade de Pods estejam em execução.
+> Pods gerenciados por ReplicaSets são automaticamente reagendados após certas condições de falhas no nó e rede.
+> O Reconciliation Loop roda constantemente, observando o estado atual e agindo para tentar fazer com que o estado atual coinscida com o estado desejado.
+> ReplicaSets e Pods não são acoplados, pois embora os RS criem e gerenciam Pods, eles não são donos dos Pods.
+> Já o HPA, entra quando queremos definir uma forma de escalar automaticamente os Pods.
 
-> ### O que é HPA?
+> ### O que é Horizontal Pod Autoscale (HPA)?
 >
 > É um worload cuja a função é escalar horizontalmente Pods dentro de ReplicaSets, baseado em consumo de CPU e memória.  
 > O HPA funciona como um loop de controle com um tempo de sincronização default de 30 segundos. Isso significa que a cada 30 segundos o controlador vai buscar as métricas disponíveis no pod e tomar uma decisão baseado nos resultados dessas métricas e no valor que foi definido como limitante para que seja escalado.
@@ -118,6 +140,8 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > Um job no K8S é um workload que cria um ou mais pods e garante que a aplicação seja executada. Uma vez que o trabalho neste pod é concluido, ele é finalizado, mas não é terminado, ou seja, o pod não executa mais nada, mas ainda é um pod ativo mas que entrou no estado Completed, o que indica que foi executdo e concluido com sucesso.  
 > Uma grande vantagem desse workload é que garantimos a execução com sucesso, uma vez que se o pod sofrer algum tipo de problema, o job criará mais um pod para substitui-lo.  
 > Em resumo, Cronjobs são essencialmente um job que pode ser agendado para executar em uma data ou intervalo especifico, usando a sintaxe crontab.
+
+> ### Como funcionam os Healthchecks?
 
 > ### O que é Helm e pra que serve?
 
