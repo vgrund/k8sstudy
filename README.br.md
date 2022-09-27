@@ -142,6 +142,11 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > Em resumo, Cronjobs são essencialmente um job que pode ser agendado para executar em uma data ou intervalo especifico, usando a sintaxe crontab.
 
 > ### Como funcionam os Healthchecks?
+>
+> Quando executamos nossa aplicação no K8S, ela é automaticamente mantida viva usando um Healthcheck do processo. Esse Healthcheck não é suficiente para garantir que a aplicação está saudável pois é possível que o processo esteja executando mas a aplicação esteja em deadlock por exemplo.
+> Para resolver essa questão o K8S oferece o Liveness Healthcheck, que permite configurar um Healthcheck fornecido pela aplicação, na configuração do Pod.  
+> Liveness Probes são definidos por container, o que significa que cada container dentro de um Pod tem sua saude checada separadamente.  
+> Existe tambem o Readiness Probe. Enquanto o Liveness check determina se uma app está saudável e quando não está, o container é reiniciado, o Readiness indica quando um container está pronto para receber requests, e containers que falham o Readiness check são removidos do Load Balancer.
 
 > ### O que é Helm e pra que serve?
 
