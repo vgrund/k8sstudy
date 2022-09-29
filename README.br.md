@@ -11,6 +11,13 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > Nas minhas palavras:
 > K8S é um sistema de gerenciamento, escalabilidade e deploy de sistemas distribuidos baseados em containeres.
 
+> ### Porque usar K8S? Quais as vantagens?
+>
+> Numa estratégia bem executada de K8S, ganhamos uma infraestrutura como código, versionada, facilmente repetível, recuperável e escalável, sem a preocupação com máquinas e suas configurações. Alem disso:
+>
+> - K8S pode ser um divisor de águas, entre ter uma infraestrutura mal administrada e uma estrutura completamente versionável e escalável.
+> - Com o K8S não temos mais problemas com máquinas, disponibilidade, e tudo se tornou extremamente fácil de manusear e recriar, pois tudo está versionado e pode ser utilizado por qualquer pessoa.
+
 > ### Qual a diferença entre VM e K8S?
 >
 > ifjsdif
@@ -148,7 +155,15 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > Liveness Probes são definidos por container, o que significa que cada container dentro de um Pod tem sua saude checada separadamente.  
 > Existe tambem o Readiness Probe. Enquanto o Liveness check determina se uma app está saudável e quando não está, o container é reiniciado, o Readiness indica quando um container está pronto para receber requests, e containers que falham o Readiness check são removidos do Load Balancer.
 
-> ### O que é Helm e pra que serve?
+> ### O que é Helm e como funciona?
+>
+> Helm é um gerenciador de pacotes que, ao mesmo tempo procura aplicações e realiza a instalação automatica de itens como o Ingress Controller, sistemas de monitoramento, bancos de dados, e muitas outras aplicações. Com ele deixamos de criar workloads manualmente.  
+> O Helm consiste em uma ferramenta de linha de comando que possui diversos comandos de instalação de pacotes composto por duas partes:
+>
+> - Helm Client - CLI que roda na máquina local e é a interface entre o usuário e o Helm.
+> - Tiller - Um workload que é criado no cluster local após a execução do comando `helm init`.
+>
+> O Helm utiliza os Charts, que são pacotes que podem ser instalados no cluster K8S. Por exemplo, o chart nginx-ingress-controller instalará tudo o que é necessário para que nosso controle de ingress precisa para funcionar, tornando fácil qualquer tipo de instalação com o `helm install` ou a remoção com `helm delete`.
 
 ## Práticas
 
