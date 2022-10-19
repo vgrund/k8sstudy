@@ -21,7 +21,7 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 > ### Qual a diferença entre VM e K8S?
 >
 > Na técnica de virtualização que conhecemos como VMs ou Máquinas Virtuais, temos uma máquina (host) capaz de executar novas instancias de um sistema operacional completo, ou seja, podemos executar diversos pequenos computadores dentro de um grande computador de forma isolada (sem que os recursos de um sejam compartilhados pelo outro).  
-> K8S utiliza o sistema de containers, que é uma especie de virtualização mais leve pois as novas instancias de SO compartilham o Kernel do host que fica responsável pelo gerenciamento de memória, I/O, CPU, e etc. As imagens de SO utilizadas nos containers geralmente são bem reduzidas pois trazem apenas o mínimo para o funcionamento do sistema, já que o host é responsável por parte do trabalho.k8s
+> K8S utiliza o sistema de containers, que é uma especie de virtualização mais leve pois as novas instancias de SO compartilham o Kernel do host que fica responsável pelo gerenciamento de memória, I/O, CPU, e etc. As imagens de SO utilizadas nos containers geralmente são bem reduzidas pois trazem apenas o mínimo para o funcionamento do sistema, já que o host é responsável por parte do trabalho.
 
 ## A anatomia de cluster K8S
 
