@@ -1,6 +1,6 @@
 # Um estudo de Kubernetes
 
-Este documento é uma compilação do estudo feito sobre o funcionamento do K8S e pode apresentar conceitos incompletos, inconsistentes, ou incorretos. O propósito é de apenas responder algumas perguntas básicas sobre a anatomia do K8S.
+Este documento é uma compilação do estudo feito sobre o funcionamento do K8S e pode apresentar conceitos incompletos, inconsistentes, ou mesmo incorretos. O propósito é de apenas responder algumas perguntas básicas sobre a anatomia do K8S.
 
 > ### O que é o Kubernetes?
 >
@@ -29,7 +29,8 @@ Este documento é uma compilação do estudo feito sobre o funcionamento do K8S 
 
 > ### Quais são os principais objetos do K8S?
 >
-> K8S possui um conjunto de objetos com funções
+> K8S possui um conjunto de objetos com funções distintas, alguns dos mais comuns são: 
+> Pod, Service, Deployment, Ingress, Cronjob, Volume, Secret, ConfigMap, ReplicaSet e Horizontal Pod Autoscale (HPA)
 
 > ### O que é um Pod?
 >
@@ -196,3 +197,21 @@ Um exemplo é quando temos um Pod que possui um Service e um Ingress, é prefer�
         tipo: frontend,
         env: stage,
         versao: 3.0.0
+
+## Mãos a obra com arquivos de manifesto
+Os comandos devem ser executados na pasta "manifests".
+
+## Preparando o ambiente 
+Iniciar o Docker.
+
+Iniciar o Minikube.   
+`minikube start`
+
+Listando os contextos. O Minikube automaticamente cria um.  
+`kubectl config get-contexts`
+
+Criar o primeiro pod com uma simples app.  
+`kubectl create -f simple-pod.json`
+
+Para ver a saida da aplicacao.  
+`kubectl logs api-pod`
