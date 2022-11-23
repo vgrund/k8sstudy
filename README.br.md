@@ -202,16 +202,40 @@ Um exemplo é quando temos um Pod que possui um Service e um Ingress, é prefer�
 Os comandos devem ser executados na pasta "manifests".
 
 ## Preparando o ambiente 
-Iniciar o Docker.
+- Iniciar o Docker.
 
-Iniciar o Minikube.   
+- Iniciar o Minikube.   
 `minikube start`
 
-Listando os contextos. O Minikube automaticamente cria um.  
+- Listando os contextos. O Minikube automaticamente cria um.  
 `kubectl config get-contexts`
 
-Criar o primeiro pod com uma simples app.  
-`kubectl create -f simple-pod.json`
+## Criando o primeiro Pod com uma simples app
+- Criando o Pod  
+`kubectl create -f example-1.json`
 
-Para ver a saida da aplicacao.  
+- Para ver a saida da aplicacao.  
 `kubectl logs api-pod`
+
+## Expondo o Pod criado anteriormente com Services
+Aqui temos a adição de uma label no Pod que o associa ao Service.
+
+- Verificar se o Pod está executando  
+`kubectl get pods`
+
+- Se o Pod estiver executando, atualize ele ou delete 
+`kubectl delete pod api-pod`
+`kubectl apply -f example-2.json` 
+
+- Caso o Pod não esteja executando, crie-o com:  
+`kubectl create -f example-2.json`
+
+- Criando o Service  
+`kubectl create -f example-3.json`
+
+- Veja a descrição completa do Pod  
+`kubectl describe pod api-pod`
+
+- Para acessar a aplicação  
+Esse comando mostrará o ip e porta onde a aplicação pode ser acessada. Basta colar no navegador.  
+`minikube service pod-api-svc`
