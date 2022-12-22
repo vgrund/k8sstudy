@@ -223,8 +223,8 @@ Aqui temos a adição de uma label no Pod que o associa ao Service.
 - Verificar se o Pod está executando  
 `kubectl get pods`
 
-- Se o Pod estiver executando, atualize ele ou delete 
-`kubectl delete pod api-pod`
+- Se o Pod estiver executando, atualize ele ou delete  
+`kubectl delete pod api-pod` .  
 `kubectl apply -f example-2.json` 
 
 - Caso o Pod não esteja executando, crie-o com:  
@@ -239,3 +239,37 @@ Aqui temos a adição de uma label no Pod que o associa ao Service.
 - Para acessar a aplicação  
 Esse comando mostrará o ip e porta onde a aplicação pode ser acessada. Basta colar no navegador.  
 `minikube service pod-api-svc`
+
+## Volumes e Deployments
+Baseado no exemplo contido no site abaixo.
+https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+Este exemplo levanta um Wordpress com banco de dados Mysql usando: Services, Persistent Volumes, Deployments e Secrets.
+Os arquivos manifesto deste exemplo estão na subpasta wordpress-example.
+
+- kustomization.yaml - O kubectl permite o gerenciamento de objetos K8S usando um arquivo kustomization.
+A primeira parte do arquivo cria um Secret através de um Secret Generator.
+A segunda parte do arquivo possui a lista de arquivos manifestos que o comando kubectl deve usar para criar nossos objetos.
+
+- mysql-deployment.yaml - Arquivo manifesto com todos os objetos necessários para levantar o Mysql para o Wordpress.
+- wordpress-deployment.yaml - Arquivo manifesto com todos os objetos necessários para levantar o Wordpress.
+
+- A criação de todos os objetos fica fácil com esta estrutura. Acesse a pasta wordpress e execute:
+`kubectl apply -k ./`
+
+- Para verificar os objetos criados podemos executar:  
+`kubectl get secrets`  
+`kubectl get pvc`  
+`kubectl get pods`  
+`kubectl get services wordpress`  
+
+- Para acessar o wordpress:  
+`minikube service wordpress --url`
+
+- Para excluir todos os objetos:  
+`kubectl delete -k ./`
+
+### Limpando o cluster
+
+Para liberar os recursos  
+`minikube stop`  
+`minikube delete`
